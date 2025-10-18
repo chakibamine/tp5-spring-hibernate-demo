@@ -125,8 +125,9 @@ public class ProductDaoImplTest {
     public void testFindAll_WithProducts() {
         // Given
         List<Product> products = Arrays.asList(testProduct);
-        when(session.createQuery(anyString(), eq(Product.class))).thenReturn(mock(org.hibernate.query.Query.class));
-        when(session.createQuery(anyString(), eq(Product.class)).list()).thenReturn(products);
+        org.hibernate.query.Query<Product> mockQuery = mock(org.hibernate.query.Query.class);
+        when(session.createQuery(anyString(), eq(Product.class))).thenReturn(mockQuery);
+        when(mockQuery.list()).thenReturn(products);
 
         // When
         List<Product> result = productDao.findAll();
@@ -140,8 +141,9 @@ public class ProductDaoImplTest {
     @Test
     public void testFindAll_EmptyList() {
         // Given
-        when(session.createQuery(anyString(), eq(Product.class))).thenReturn(mock(org.hibernate.query.Query.class));
-        when(session.createQuery(anyString(), eq(Product.class)).list()).thenReturn(Arrays.asList());
+        org.hibernate.query.Query<Product> mockQuery = mock(org.hibernate.query.Query.class);
+        when(session.createQuery(anyString(), eq(Product.class))).thenReturn(mockQuery);
+        when(mockQuery.list()).thenReturn(Arrays.asList());
 
         // When
         List<Product> result = productDao.findAll();

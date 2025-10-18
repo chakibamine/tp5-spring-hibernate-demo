@@ -113,8 +113,9 @@ public class CategoryDaoImplTest {
     public void testFindAll_WithCategories() {
         // Given
         List<Category> categories = Arrays.asList(testCategory);
-        when(session.createQuery(anyString(), eq(Category.class))).thenReturn(mock(org.hibernate.query.Query.class));
-        when(session.createQuery(anyString(), eq(Category.class)).list()).thenReturn(categories);
+        org.hibernate.query.Query<Category> mockQuery = mock(org.hibernate.query.Query.class);
+        when(session.createQuery(anyString(), eq(Category.class))).thenReturn(mockQuery);
+        when(mockQuery.list()).thenReturn(categories);
 
         // When
         List<Category> result = categoryDao.findAll();
@@ -128,8 +129,9 @@ public class CategoryDaoImplTest {
     @Test
     public void testFindAll_EmptyList() {
         // Given
-        when(session.createQuery(anyString(), eq(Category.class))).thenReturn(mock(org.hibernate.query.Query.class));
-        when(session.createQuery(anyString(), eq(Category.class)).list()).thenReturn(Arrays.asList());
+        org.hibernate.query.Query<Category> mockQuery = mock(org.hibernate.query.Query.class);
+        when(session.createQuery(anyString(), eq(Category.class))).thenReturn(mockQuery);
+        when(mockQuery.list()).thenReturn(Arrays.asList());
 
         // When
         List<Category> result = categoryDao.findAll();
